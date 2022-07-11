@@ -8,9 +8,9 @@ $requestBody = Utility::getRequestBody();
 
 $request = DBUtil::executeQuery(
     $connection,
-    "SELECT * FROM administrator WHERE username = ? AND password = ?",
-    $requestBody['username'],
-    $requestBody['password']
+    "SELECT * FROM administrator WHERE admin_username = ? AND admin_password = ?",
+    $requestBody['admin_username'],
+    $requestBody['admin_password']
 );
 
 if (count($request) > 0) {
@@ -20,7 +20,7 @@ if (count($request) > 0) {
     Utility::sendResponse(
         true,
         'Success Login',
-        null
+        $request
 //        $token
     );
 } else {
