@@ -8,7 +8,7 @@ $requestBody = Utility::getRequestBody();
 
 $request = DBUtil::executeQuery(
     $connection,
-    "SELECT * FROM administrator WHERE admin_username = ? AND admin_password = ?",
+    'SELECT * FROM administrator WHERE admin_username = ? AND admin_password = ?',
     $requestBody['admin_username'],
     $requestBody['admin_password']
 );
