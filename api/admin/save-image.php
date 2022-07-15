@@ -9,40 +9,19 @@ $requestBody = Utility::getRequestBody();
 $file_path = "../../uploads/";
 
 try {
-    DBUtil::getConnection()->beginTransaction();
-
-    $result = DBUtil::executeUpdate(
+    $footageResult = DBUtil::executeUpdate(
         $connection,
-        "INSERT INTO footage (file_path, footage_name, file_type, added_date) VALUES (?, ?, ?, ?)",
+        "INSERT INTO footage (file_path, footage_name, file_type, added_date, tags, category_id) VALUES (?, ?, ?, ?, ?, ?)",
         $file_path,
         $requestBody['footage_name'],
         $requestBody['file_type'],
-        $requestBody['added_date']
-    );
-
-    $result = DBUtil::executeUpdate(
-        $connection,
-        "INSERT INTO category (category_name) VALUES (?)",
-        $requestBody['category_name']
-    );
-
-    $result = DBUtil::executeUpdate(
-        $connection,
-        "INSERT INTO category_detail (footage_id, category_id) VALUES (?, ?)",
-        $requestBody['footage_id'],
+        $requestBody['added_date'],
+        $requestBody['tags'],
         $requestBody['category_id']
     );
 
-    $result = DBUtil::executeUpdate(
-        $connection,
-        "INSERT INTO tags (tag_line, footage_id) VALUES (?, ?)",
-        $requestBody['tag_line'],
-        $requestBody['footage_id']
-    );
+    if ($footageResult) {
 
-    DBUtil::getConnection() -> commit();
-
-    if ($result) {
         $fp = fopen(
             $file_path
             .$requestBody['footage_name']
@@ -59,18 +38,16 @@ try {
             $requestBody['footage_name']." Added!",
             $requestBody
         );
-
+        
     } else {
         Utility::sendResponse(
             false,
-            $requestBody['footage_name']." not added!",
+            "footage_id and category_id not added!",
             null
         );
     }
-
 } catch (Exception $e) {
     try {
-        DBUtil::getConnection()->rollBack();
 
         Utility::sendResponse(
             false,
