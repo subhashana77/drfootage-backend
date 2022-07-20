@@ -1,4 +1,7 @@
 <?php
+
+//include_once '../../common/Utility.php';
+
 $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '*';
 header('Access-Control-Allow-Methods: GET, POST, DELETE, PUT, PATCH, OPTIONS');
 header('Access-Control-Allow-Credentials: true');
@@ -18,8 +21,8 @@ class DBConn {
         try {
             $this->servername = 'localhost';
             $this->username = 'root';
-            $this->password = 'root';
-            $this->dbname = 'dilshan_dr_footage';
+            $this->password = '';
+            $this->dbname = 'dr_footage';
 
             $this->conn = new PDO (
                 "mysql: host=$this->servername; dbname=$this->dbname", $this->username, $this->password
@@ -27,7 +30,18 @@ class DBConn {
 
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+//            Utility::sendResponse(
+//                true,
+//                "Database successfully connected!",
+//                null
+//            );
+
         } catch (PDOException $exception) {
+//            Utility::sendResponse(
+//                false,
+//                "Database connection fail!",
+//                null
+//            );
             throw $exception;
         }
     }
