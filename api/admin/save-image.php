@@ -6,7 +6,7 @@ include_once '../../common/Utility.php';
 $connection = DBUtil::getConnection();
 $requestBody = Utility::getRequestBody();
 
-$file_path = "../../uploads/";
+$file_path = "http://localhost/projects/drfootage-backend/uploads/";
 
 try {
     $result = DBUtil::executeUpdate(

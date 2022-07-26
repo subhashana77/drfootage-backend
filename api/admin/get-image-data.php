@@ -8,20 +8,21 @@ $requestBody = Utility::getRequestBody();
 
 $request = DBUtil::executeQuery(
     $connection,
-    'SELECT footage_name, footage_id FROM footage'
+    'SELECT * FROM footage WHERE footage_name = ?',
+    $requestBody['footage_name']
 );
 
 if (count($request) > 0) {
 
     Utility::sendResponse(
         true,
-        'All image names are fetched!',
+        'Image data are fetched!',
         $request
     );
 } else {
     Utility::sendResponse(
         false,
-        'Image names fetching fail!',
+        'Image data not found!',
         null
     );
 }
