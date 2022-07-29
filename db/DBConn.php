@@ -21,8 +21,8 @@ class DBConn {
         try {
             $this->servername = 'localhost';
             $this->username = 'root';
-            $this->password = '';
-            $this->dbname = 'dr_footage';
+            $this->password = 'root';
+            $this->dbname = 'dilshan_dr_footage';
 
             $this->conn = new PDO (
                 "mysql: host=$this->servername; dbname=$this->dbname", $this->username, $this->password
