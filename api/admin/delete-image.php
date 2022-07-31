@@ -6,22 +6,22 @@ include_once '../../common/Utility.php';
 $connection = DBUtil::getConnection();
 $requestBody = Utility::getRequestBody();
 
-$request = DBUtil::executeQuery(
+$result = DBUtil::executeUpdate(
     $connection,
-    'SELECT footage_name, footage_id, tags, file_type, file_path, footage_name, category_id FROM footage'
+    "DELETE FROM footage WHERE footage_id = ?",
+    $requestBody['footage_id']
 );
 
-if (count($request) > 0) {
-
+if ($result) {
     Utility::sendResponse(
         true,
-        'All image names are fetched!',
-        $request
+        "image Deleted!",
+        $requestBody
     );
 } else {
     Utility::sendResponse(
         false,
-        'Image names fetching fail!',
+        "Image not deleted!",
         null
     );
 }
