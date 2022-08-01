@@ -15,13 +15,13 @@ $result = DBUtil::executeUpdate(
 if ($result) {
     Utility::sendResponse(
         true,
-        "image Deleted!",
+        'Image deleted!',
         $requestBody
     );
 } else {
     Utility::sendResponse(
         false,
-        "Image not deleted!",
+        'Image not deleted!',
         null
     );
 }

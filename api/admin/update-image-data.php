@@ -18,13 +18,13 @@ $result = DBUtil::executeUpdate(
 if ($result) {
     Utility::sendResponse(
         true,
-        "Image details updated!",
+        'Image details updated!',
         $requestBody
     );
 } else {
     Utility::sendResponse(
         false,
-        "Image details update fail!",
+        'Image details update fail!',
         null
     );
 }

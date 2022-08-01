@@ -6,11 +6,12 @@ include_once '../../common/Utility.php';
 $connection = DBUtil::getConnection();
 $requestBody = Utility::getRequestBody();
 
+$file_path = "http://localhost/projects/drfootage-backend/uploads/";
 try {
     $result = DBUtil::executeUpdate(
         $connection,
         "INSERT INTO footage (file_path, footage_name, file_type, added_date, tags, category_id) VALUES (?, ?, ?, ?, ?, ?)",
-        $requestBody['file_path'],
+        $file_path,
         $requestBody['footage_name'],
         $requestBody['file_type'],
         $requestBody['added_date'],
@@ -18,29 +19,22 @@ try {
         $requestBody['category_id']
     );
 
-    $base64Image = $requestBody['base64'];
-    var_dump($base64Image);
-
-//    $fp = fopen(
-//        $requestBody['file_path']
-//        .$requestBody['footage_name']
-//        ."."
-//        .$requestBody['file_type'],
-//        "w+"
-//    );
-//    fwrite($fp, base64_decode($requestBody['base64']));
+    $encoded = $requestBody['base64_code'];
+    $file = fopen("../../uploads/".$requestBody['footage_name'].".".$requestBody['file_type'], "w");
+    fwrite($file, base64_decode($encoded));
+    fclose($file);
 
     if ($result) {
         Utility::sendResponse(
             true,
-            $requestBody['footage_name']." Added!",
+            $requestBody['footage_name'].'.'.$requestBody['file_type']." Added!",
             $requestBody
         );
 
     } else {
         Utility::sendResponse(
             false,
-            "footage not uploaded!",
+            'footage not uploaded!',
             null
         );
     }
