@@ -8,7 +8,7 @@ $requestBody = Utility::getRequestBody();
 
 $request = DBUtil::executeQuery(
     $connection,
-    'SELECT footage_name, footage_id, tags, file_type, file_path, footage_name, category_id FROM footage'
+    'SELECT footage_name, footage_id, tags, file_type, file_path, footage_name, category_id, added_date, file_type FROM footage'
 );
 
 if (count($request) > 0) {
